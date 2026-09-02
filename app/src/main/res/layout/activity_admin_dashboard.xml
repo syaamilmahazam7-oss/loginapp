@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -10,21 +14,111 @@
         android:layout_height="wrap_content"
         android:text="Admin Dashboard"
         android:textSize="20sp"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Announcement"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+    <EditText
+        android:id="@+id/etAnnouncement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Teks announcement" />
+    <Button
+        android:id="@+id/btnUpdateAnnouncement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Announcement"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Urus Role/Tier"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+    <EditText
+        android:id="@+id/etNewRole"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama role baru (cth: VIP)" />
+    <Button
+        android:id="@+id/btnAddRole"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah Role"
+        android:layout_marginTop="8dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRoles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Urus Senarai App (Item)"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+    <EditText
+        android:id="@+id/etAppName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama app" />
+    <EditText
+        android:id="@+id/etAppPackage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Package name" />
+    <EditText
+        android:id="@+id/etAppDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description" />
+    <EditText
+        android:id="@+id/etAppDownloadUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Link download APK" />
+    <EditText
+        android:id="@+id/etAppVideoUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Link video panduan" />
+    <Spinner
+        android:id="@+id/spinnerAppRole"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+    <Button
+        android:id="@+id/btnAddApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah App"
+        android:layout_marginTop="8dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvApps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp" />
 
     <TextView
         android:id="@+id/tvCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Jumlah user: 0"
-        android:textColor="#666666"
-        android:textSize="13sp"
-        android:layout_marginBottom="12dp" />
-
+        android:text="Senarai User"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUsers"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
+</androidx.core.widget.NestedScrollView>
