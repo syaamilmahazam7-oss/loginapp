@@ -82,6 +82,21 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/btnAdminDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADMIN DASHBOARD"
+            android:textColor="@color/accent_green"
+            android:textStyle="bold"
+            android:letterSpacing="0.05"
+            android:gravity="center"
+            android:background="@drawable/bg_button_outline"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/btnLogoutSetting"
             android:layout_width="match_parent"

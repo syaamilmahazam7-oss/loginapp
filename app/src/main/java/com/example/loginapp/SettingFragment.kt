@@ -38,7 +38,12 @@ class SettingFragment : Fragment() {
                     val role = doc.getString("role") ?: "user"
                     binding.tvSettingName.text = memberCode?.takeIf { it.isNotBlank() } ?: "Member"
                     binding.tvSettingRole.text = role.uppercase()
+                    binding.btnAdminDashboard.visibility = if (role == "admin") View.VISIBLE else View.GONE
                 }
+        }
+
+        binding.btnAdminDashboard.setOnClickListener {
+            startActivity(Intent(requireContext(), AdminDashboardActivity::class.java))
         }
 
         binding.btnLogoutSetting.setOnClickListener {
