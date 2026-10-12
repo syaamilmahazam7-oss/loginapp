@@ -1,34 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/bg_void"
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
-
-    <TextView
-        android:id="@+id/tvSettingName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvSettingEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#666666"
-        android:layout_marginBottom="20dp" />
-
-    <Button
-        android:id="@+id/btnLogoutSetting"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log Keluar" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SETTING // AKAUN"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp"
+            android:letterSpacing="0.12"
+            android:textStyle="bold"
+            android:layout_marginBottom="14dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="18dp"
+            android:layout_marginBottom="16dp">
+
+            <FrameLayout
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_badge_circle">
+
+                <TextView
+                    android:id="@+id/tvSettingInitial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/accent_green"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="U" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvSettingName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="Member" />
+
+            <TextView
+                android:id="@+id/tvSettingEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSettingRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_chip"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/accent_green"
+                android:textSize="10sp"
+                android:letterSpacing="0.1"
+                android:textStyle="bold"
+                android:text="USER" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnLogoutSetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOG KELUAR"
+            android:textColor="@color/text_on_accent"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            android:background="@drawable/bg_button_primary"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:elevation="0dp" />
+
+    </LinearLayout>
+
+</ScrollView>

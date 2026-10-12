@@ -15,6 +15,7 @@
         <activity android:name=".RegisterActivity" android:exported="false" />
         <activity android:name=".DashboardActivity" android:exported="false" />
         <activity android:name=".AdminDashboardActivity" android:exported="false" />
+        <activity android:name=".ChatRoomActivity" android:exported="false" />
 
     </application>
 </manifest>

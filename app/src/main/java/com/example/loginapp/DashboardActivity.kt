@@ -47,7 +47,7 @@ class DashboardActivity : AppCompatActivity() {
                     // BottomNavigationView max 5 item, so Admin ditambah secara
                     // programatik hanya bila role disahkan admin (bukan dalam XML).
                     binding.bottomNav.menu.add(0, R.id.nav_admin, 5, "Admin")
-                        .setIcon(android.R.drawable.ic_menu_manage)
+                        .setIcon(R.drawable.ic_nav_admin)
                 }
             }
     }
