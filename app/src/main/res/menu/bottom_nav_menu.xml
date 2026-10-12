@@ -20,8 +20,4 @@
         android:id="@+id/nav_setting"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="Setting" />
-    <item
-        android:id="@+id/nav_admin"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:title="Admin" />
 </menu>

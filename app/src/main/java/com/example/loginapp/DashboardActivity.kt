@@ -17,9 +17,6 @@ class DashboardActivity : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Sembunyikan tab Admin secara default, sampai role disahkan
-        binding.bottomNav.menu.findItem(R.id.nav_admin)?.isVisible = false
-
         if (savedInstanceState == null) {
             loadFragment(ItemFragment())
         }
@@ -46,8 +43,11 @@ class DashboardActivity : AppCompatActivity() {
         db.collection("users").document(uid).get()
             .addOnSuccessListener { doc ->
                 val role = doc.getString("role") ?: "user"
-                if (role == "admin") {
-                    binding.bottomNav.menu.findItem(R.id.nav_admin)?.isVisible = true
+                if (role == "admin" && binding.bottomNav.menu.findItem(R.id.nav_admin) == null) {
+                    // BottomNavigationView max 5 item, so Admin ditambah secara
+                    // programatik hanya bila role disahkan admin (bukan dalam XML).
+                    binding.bottomNav.menu.add(0, R.id.nav_admin, 5, "Admin")
+                        .setIcon(android.R.drawable.ic_menu_manage)
                 }
             }
     }
