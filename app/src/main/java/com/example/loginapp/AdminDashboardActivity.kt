@@ -5,7 +5,9 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.example.loginapp.databinding.ActivityAdminDashboardBinding
 
 class AdminDashboardActivity : AppCompatActivity() {
@@ -22,11 +24,97 @@ class AdminDashboardActivity : AppCompatActivity() {
         binding.rvRoles.layoutManager = LinearLayoutManager(this)
         binding.rvApps.layoutManager = LinearLayoutManager(this)
         binding.rvUsers.layoutManager = LinearLayoutManager(this)
+        binding.rvTutorialsAdmin.layoutManager = LinearLayoutManager(this)
+        binding.rvAnnouncementsAdmin.layoutManager = LinearLayoutManager(this)
 
         setupAnnouncement()
         setupRoles()
         setupApps()
+        setupTutorials()
+        setupAnnouncementPosts()
         setupUsers()
+    }
+
+    private fun setupTutorials() {
+        db.collection("tutorials")
+            .orderBy("order", Query.Direction.ASCENDING)
+            .addSnapshotListener { snapshot, _ ->
+                if (snapshot == null) return@addSnapshotListener
+                val tutorials = snapshot.documents.map { doc ->
+                    TutorialItemAdmin(
+                        id = doc.id,
+                        title = doc.getString("title") ?: "",
+                        description = doc.getString("description") ?: "",
+                        videoUrl = doc.getString("videoUrl") ?: "",
+                        order = doc.getLong("order") ?: 0
+                    )
+                }
+                binding.rvTutorialsAdmin.adapter = TutorialAdminAdapter(tutorials)
+            }
+
+        binding.btnAddTutorial.setOnClickListener {
+            val title = binding.etTutorialTitle.text.toString().trim()
+            val description = binding.etTutorialDescription.text.toString().trim()
+            val videoUrl = binding.etTutorialVideoUrl.text.toString().trim()
+
+            if (title.isEmpty()) {
+                Toast.makeText(this, "Tajuk tutorial wajib diisi", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val tutorial = mapOf(
+                "title" to title,
+                "description" to description,
+                "videoUrl" to videoUrl,
+                "order" to System.currentTimeMillis()
+            )
+            db.collection("tutorials").add(tutorial)
+                .addOnSuccessListener {
+                    binding.etTutorialTitle.text.clear()
+                    binding.etTutorialDescription.text.clear()
+                    binding.etTutorialVideoUrl.text.clear()
+                    Toast.makeText(this, "Tutorial ditambah", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun setupAnnouncementPosts() {
+        db.collection("announcements")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, _ ->
+                if (snapshot == null) return@addSnapshotListener
+                val posts = snapshot.documents.map { doc ->
+                    AnnouncementPostAdmin(
+                        id = doc.id,
+                        title = doc.getString("title") ?: "",
+                        body = doc.getString("body") ?: "",
+                        timestamp = doc.getTimestamp("timestamp")
+                    )
+                }
+                binding.rvAnnouncementsAdmin.adapter = AnnouncementPostAdminAdapter(posts)
+            }
+
+        binding.btnAddAnnouncementPost.setOnClickListener {
+            val title = binding.etAnnouncementPostTitle.text.toString().trim()
+            val body = binding.etAnnouncementPostBody.text.toString().trim()
+
+            if (title.isEmpty()) {
+                Toast.makeText(this, "Tajuk pengumuman wajib diisi", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val post = mapOf(
+                "title" to title,
+                "body" to body,
+                "timestamp" to Timestamp.now()
+            )
+            db.collection("announcements").add(post)
+                .addOnSuccessListener {
+                    binding.etAnnouncementPostTitle.text.clear()
+                    binding.etAnnouncementPostBody.text.clear()
+                    Toast.makeText(this, "Pengumuman ditambah", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun setupAnnouncement() {

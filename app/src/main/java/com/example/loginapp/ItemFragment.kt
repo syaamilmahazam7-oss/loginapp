@@ -14,6 +14,9 @@ import com.example.loginapp.databinding.FragmentItemBinding
 import com.example.loginapp.models.ItemModel
 import com.google.firebase.firestore.FirebaseFirestore
 
+// Nota: tab Item memaparkan collection "apps" (sama data yang admin urus
+// dalam Admin Dashboard -> "Urus Senarai App (Item)"), bukan collection "items".
+
 class ItemFragment : Fragment() {
 
     private var _binding: FragmentItemBinding? = null
@@ -48,11 +51,18 @@ class ItemFragment : Fragment() {
     }
 
     private fun loadItems() {
-        db.collection("items").get()
+        db.collection("apps").get()
             .addOnSuccessListener { snapshot ->
                 if (_binding == null) return@addOnSuccessListener
-                val items = snapshot.documents.mapNotNull { doc ->
-                    doc.toObject(ItemModel::class.java)?.apply { id = doc.id }
+                val items = snapshot.documents.map { doc ->
+                    val requiredRole = doc.getString("requiredRole") ?: "user"
+                    ItemModel(
+                        name = doc.getString("name") ?: "",
+                        description = doc.getString("description") ?: "",
+                        downloadUrl = doc.getString("downloadUrl") ?: "",
+                        badge = if (requiredRole != "user") requiredRole.uppercase() else "",
+                        id = doc.id
+                    )
                 }
                 adapter.submitList(items)
                 binding.tvItemEmpty.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE

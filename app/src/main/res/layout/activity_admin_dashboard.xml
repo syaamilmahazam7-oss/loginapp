@@ -109,6 +109,69 @@
         android:layout_marginBottom="24dp" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Urus Tutorial"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+    <EditText
+        android:id="@+id/etTutorialTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tajuk tutorial" />
+    <EditText
+        android:id="@+id/etTutorialDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Penerangan ringkas" />
+    <EditText
+        android:id="@+id/etTutorialVideoUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Link video (YouTube dsb)" />
+    <Button
+        android:id="@+id/btnAddTutorial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah Tutorial"
+        android:layout_marginTop="8dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTutorialsAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Urus Senarai Pengumuman (tab Announcement)"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+    <EditText
+        android:id="@+id/etAnnouncementPostTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tajuk pengumuman" />
+    <EditText
+        android:id="@+id/etAnnouncementPostBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Isi pengumuman" />
+    <Button
+        android:id="@+id/btnAddAnnouncementPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah Pengumuman"
+        android:layout_marginTop="8dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAnnouncementsAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
         android:id="@+id/tvCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
