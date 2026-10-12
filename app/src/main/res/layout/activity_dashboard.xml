@@ -21,7 +21,6 @@
         app:itemIconTint="@color/bottom_nav_icon_tint"
         app:itemTextColor="@color/bottom_nav_icon_tint"
         app:itemRippleColor="@color/accent_green_dim"
-        app:itemActiveIndicatorColor="@android:color/transparent"
         app:menu="@menu/bottom_nav_menu" />
 
 </LinearLayout>
