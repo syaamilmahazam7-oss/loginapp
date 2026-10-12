@@ -221,7 +221,7 @@ class AdminDashboardActivity : AppCompatActivity() {
                 )
             }
             binding.tvCount.text = "Senarai User (${users.size})"
-            binding.rvUsers.adapter = UserAdapter(users)
+            binding.rvUsers.adapter = UserAdapter(users, roleNames)
         }
     }
 }
