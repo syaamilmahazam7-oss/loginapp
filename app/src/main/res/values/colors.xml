@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_void">#0B0B0B</color>
+    <color name="surface_card">#161616</color>
+    <color name="surface_card_alt">#121212</color>
+    <color name="surface_card_high">#1F1F1E</color>
+    <color name="border_slate">#2C2C2A</color>
+    <color name="accent_green">#66FF00</color>
+    <color name="accent_green_dim">#4FCC00</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#8E8E93</color>
+    <color name="text_on_accent">#0B0B0B</color>
+</resources>

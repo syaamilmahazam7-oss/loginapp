@@ -20,6 +20,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
 
+        loadAnnouncementTicker()
+
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
@@ -43,6 +45,20 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun loadAnnouncementTicker() {
+        db.collection("settings").document("announcement").get()
+            .addOnSuccessListener { doc ->
+                val text = doc.getString("text")
+                if (!text.isNullOrBlank()) {
+                    binding.tvAnnouncementTicker.text = text
+                }
+                binding.tvAnnouncementTicker.isSelected = true
+            }
+            .addOnFailureListener {
+                binding.tvAnnouncementTicker.isSelected = true
+            }
+    }
+
     override fun onStart() {
         super.onStart()
         // Auto-login kalau session masih sah
@@ -51,17 +67,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun routeByRole(uid: String?) {
         if (uid == null) return
-        db.collection("users").document(uid).get()
-            .addOnSuccessListener { doc ->
-                val role = doc.getString("role") ?: "user"
-                val target = if (role == "admin") AdminDashboardActivity::class.java
-                             else DashboardActivity::class.java
-                startActivity(Intent(this, target))
-                finish()
-            }
-            .addOnFailureListener {
-                startActivity(Intent(this, DashboardActivity::class.java))
-                finish()
-            }
+        // Admin dan user biasa sama-sama masuk Dashboard (5 tab biasa).
+        // Kalau role == admin, tab ke-6 "Admin" akan muncul automatik dalam Dashboard.
+        startActivity(Intent(this, DashboardActivity::class.java))
+        finish()
     }
 }

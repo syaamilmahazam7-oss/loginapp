@@ -3,7 +3,7 @@
 
     <application
         android:label="LoginApp"
-        android:theme="@style/Theme.Material3.DayNight">
+        android:theme="@style/Theme.LoginApp">
 
         <activity android:name=".LoginActivity" android:exported="true">
             <intent-filter>
