@@ -15,6 +15,7 @@ class AdminDashboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminDashboardBinding
     private val db = FirebaseFirestore.getInstance()
     private var roleNames = mutableListOf("user")
+    private var cachedUsers: List<User> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -148,6 +149,10 @@ class AdminDashboardActivity : AppCompatActivity() {
             roleNames = (listOf("user") + roles.map { it.name }).distinct().toMutableList()
             val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, roleNames)
             binding.spinnerAppRole.adapter = spinnerAdapter
+
+            // Role baru/padam kena refresh dropdown dalam Senarai User jugak,
+            // bukan tunggu collection "users" berubah.
+            refreshUserAdapter()
         }
 
         binding.btnAddRole.setOnClickListener {
@@ -212,7 +217,7 @@ class AdminDashboardActivity : AppCompatActivity() {
         db.collection("users").addSnapshotListener { snapshot, error ->
             if (error != null || snapshot == null) return@addSnapshotListener
 
-            val users = snapshot.documents.map { doc ->
+            cachedUsers = snapshot.documents.map { doc ->
                 User(
                     uid = doc.id,
                     name = doc.getString("name") ?: "",
@@ -220,8 +225,12 @@ class AdminDashboardActivity : AppCompatActivity() {
                     role = doc.getString("role") ?: "user"
                 )
             }
-            binding.tvCount.text = "Senarai User (${users.size})"
-            binding.rvUsers.adapter = UserAdapter(users, roleNames)
+            binding.tvCount.text = "Senarai User (${cachedUsers.size})"
+            refreshUserAdapter()
         }
+    }
+
+    private fun refreshUserAdapter() {
+        binding.rvUsers.adapter = UserAdapter(cachedUsers, roleNames)
     }
 }
