@@ -47,6 +47,7 @@ class SettingFragment : Fragment() {
         }
 
         binding.btnLogoutSetting.setOnClickListener {
+            AccountShare.clear()
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()

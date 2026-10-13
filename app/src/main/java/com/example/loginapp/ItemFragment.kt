@@ -12,10 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.loginapp.adapters.ItemAdapter
 import com.example.loginapp.databinding.FragmentItemBinding
 import com.example.loginapp.models.ItemModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 // Nota: tab Item memaparkan collection "apps" (sama data yang admin urus
 // dalam Admin Dashboard -> "Urus Senarai App (Item)"), bukan collection "items".
+//
+// Enforcement requiredRole: setiap app HANYA kelihatan kepada user yang rolenya
+// SAMA PERSIS dengan requiredRole app tu (admin nampak semua app, tanpa kira role).
+// Contoh: app "Belalang" ditanda requiredRole="clicker" -> cuma user dengan
+// role="clicker" nampak app tu dalam tab Item. User role lain (termasuk "user"
+// biasa) TAK nampak app tu langsung -- bukan sekadar locked/disabled, terus
+// tak masuk dalam senarai.
 
 class ItemFragment : Fragment() {
 
@@ -23,6 +31,7 @@ class ItemFragment : Fragment() {
     private val binding get() = _binding!!
     private val db = FirebaseFirestore.getInstance()
     private lateinit var adapter: ItemAdapter
+    private var currentUserRole = "user"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -47,15 +56,35 @@ class ItemFragment : Fragment() {
         binding.rvItemApps.layoutManager = LinearLayoutManager(requireContext())
         binding.rvItemApps.adapter = adapter
 
-        loadItems()
+        loadUserRoleThenItems()
+    }
+
+    private fun loadUserRoleThenItems() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        if (uid == null) {
+            loadItems()
+            return
+        }
+        db.collection("users").document(uid).get()
+            .addOnSuccessListener { doc ->
+                if (_binding == null) return@addOnSuccessListener
+                currentUserRole = doc.getString("role") ?: "user"
+                loadItems()
+            }
+            .addOnFailureListener {
+                if (_binding == null) return@addOnFailureListener
+                loadItems()
+            }
     }
 
     private fun loadItems() {
         db.collection("apps").get()
             .addOnSuccessListener { snapshot ->
                 if (_binding == null) return@addOnSuccessListener
-                val items = snapshot.documents.map { doc ->
+                val items = snapshot.documents.mapNotNull { doc ->
                     val requiredRole = doc.getString("requiredRole") ?: "user"
+                    val isAllowed = currentUserRole == "admin" || requiredRole == currentUserRole
+                    if (!isAllowed) return@mapNotNull null
                     ItemModel(
                         name = doc.getString("name") ?: "",
                         description = doc.getString("description") ?: "",

@@ -16,6 +16,9 @@ class DashboardActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             loadFragment(ItemFragment())
+            // Minta akses storan SELEPAS user dah masuk Dashboard (bukan masa app baru dibuka),
+            // supaya akaun yang login boleh dikongsi dengan app lain (Belalang dll).
+            AccountShare.promptForAccess(this)
         }
 
         // Nota: BottomNavigationView ada HARD LIMIT 5 item (akan crash
@@ -34,6 +37,13 @@ class DashboardActivity : AppCompatActivity() {
             loadFragment(fragment)
             true
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Tulis/kemas kini fail akaun kongsi. Senyap kalau belum ada akses storan;
+        // lepas user benarkan di Settings dan kembali ke app, ia terus tertulis di sini.
+        AccountShare.write(this)
     }
 
     private fun loadFragment(fragment: Fragment) {
